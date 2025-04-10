@@ -12,22 +12,20 @@ contract SimpleStoreTest is Test {
     /// @dev Setup the testing environment.
 
     function setUp() public {
-        arr = DynamicArray(HuffDeployer.deploy("DynamicArray"));
+        arr = DynamicArray(HuffDeployer.config().deploy("DynamicArray"));
     }
 
     function testLength() public {
         uint x = arr.length();
-        assertEq(x, 0x00);
+        console2.log(x);
+        assertEq(x, 0);
     }
 
     function testPush() public {
-        bytes4 selector = bytes4(keccak256("push()"));
-
-        bytes memory data = abi.encodeWithSelector(selector, address(this));
-
-        (bool success, bytes memory returnData) = address(arr).call(data);
-
-        // IN PROGRESS
+        // uint256 val = 2;
+        arr.push();
+        assertEq(arr.length(), 1);
+        // assertEq(arr.show(0), val);
     }
 }
 

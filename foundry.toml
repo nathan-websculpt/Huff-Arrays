@@ -5,6 +5,7 @@ auto_detect_solc = false
 optimizer = true
 optimizer_runs = 200 # Default amount
 ffi = true
+evm_version = 'shanghai'
 fuzz_runs = 1_000
 remappings = [
   "forge-std=lib/forge-std/src/",
