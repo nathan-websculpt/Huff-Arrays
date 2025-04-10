@@ -47,6 +47,15 @@
     0x00                        // [0, LastStorageSlot]
     swap1                       // [LastStorageSlot, 0]
     sstore                      // []
+
+    // TODO: dup this earlier
+    [ARRAY] sload           //[length]
+
+    // update array length
+    0x01 swap1 sub              // [0x01 - length]
+    [ARRAY]                 // [ARRAY_PTR, newLength]
+    sstore                      // []
+    stop
 }
 
 
@@ -68,9 +77,11 @@
 
     sstore                      // [length]
 
+    // update array length
     0x01 add                    // [0x01 + length]
-    [ARRAY]                     // [ARRAY_PTR, newLenght]
+    [ARRAY]                     // [ARRAY_PTR, newLength]
     sstore                      // []
+    stop
 }
 
 

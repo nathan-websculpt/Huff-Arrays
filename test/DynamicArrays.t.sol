@@ -22,10 +22,36 @@ contract SimpleStoreTest is Test {
     }
 
     function testPush() public {
-        // uint256 val = 2;
         arr.push();
         assertEq(arr.length(), 1);
-        // assertEq(arr.show(0), val);
+    }
+
+    function testPushMultipleItems() public {
+        arr.push();
+        assertEq(arr.length(), 1);
+        arr.push();
+        assertEq(arr.length(), 2);
+        arr.push();
+        assertEq(arr.length(), 3);
+    }
+
+    function testPop() public {
+        arr.push();
+        assertEq(arr.length(), 1);
+        arr.popLast();
+        assertEq(arr.length(), 0);
+    }
+
+    function testMultiplePops() public {
+        arr.push();
+        assertEq(arr.length(), 1);
+        arr.push();
+        assertEq(arr.length(), 2);
+
+        arr.popLast();
+        assertEq(arr.length(), 1);
+        arr.popLast();
+        assertEq(arr.length(), 0);
     }
 }
 
