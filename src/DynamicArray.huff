@@ -38,22 +38,22 @@
     0x20 0x00                   // [memOffset, size]
     sha3                        // [hash]
 
-    [ARRAY] sload               // [Array_length, hash]
-    0x01 swap1                  // [Array_length, 0x01, hash]
-    sub                         // [Array_length - 1, hash]
+    [ARRAY] sload               // [length, hash]
+    dup1                        // [length, length, hash]
+    swap2                       // [length, hash, length]
+    0x01                        // [0x01, length, hash, length]
+    swap1                       // [length, 0x01, hash, length]
+    sub                         // [length - 1, hash, length]
 
-    add                         // [Last_item + hash]
+    add                         // [Last_item + hash, length]
 
-    0x00                        // [0, LastStorageSlot]
-    swap1                       // [LastStorageSlot, 0]
-    sstore                      // []
-
-    // TODO: dup this earlier
-    [ARRAY] sload           //[length]
+    0x00                        // [0, LastStorageSlot, length]
+    swap1                       // [LastStorageSlot, 0, length]
+    sstore                      // [length]
 
     // update array length
-    0x01 swap1 sub              // [0x01 - length]
-    [ARRAY]                 // [ARRAY_PTR, newLength]
+    0x01 swap1 sub              // [length - 1]
+    [ARRAY]                     // [ARRAY_PTR, newLength]
     sstore                      // []
     stop
 }
