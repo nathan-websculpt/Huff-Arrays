@@ -40,12 +40,12 @@
 
     [ARRAY] sload               // [length, hash]
     dup1                        // [length, length, hash]
-    swap2                       // [length, hash, length]
-    0x01                        // [0x01, length, hash, length]
-    swap1                       // [length, 0x01, hash, length]
-    sub                         // [length - 1, hash, length]
+    swap2                       // [hash, length, length]
+    0x01                        // [0x01, hash, length, length]
+    swap1                       // [hash, 0x01, length, length]
+    sub                         // [hash - 0x01, length, length]
 
-    add                         // [Last_item + hash, length]
+    add                         // [LastStorageSlot, length]
 
     0x00                        // [0, LastStorageSlot, length]
     swap1                       // [LastStorageSlot, 0, length]
