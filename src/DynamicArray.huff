@@ -33,28 +33,27 @@
 
 
 #define macro POP() = takes(0) returns(0) {
-    [ARRAY]                     // [ARRAY_PTR]
-    0x00 mstore                 // []
-    0x20 0x00                   // [memOffset, size]
-    sha3                        // [hash]
+    0x01                           // [0x01]
+    [ARRAY]                        // [ARRAY_PTR, 0x01]
+    sload                          // [Array_length, 0x01]
+    sub                            // [length_sub_one]
 
-    [ARRAY] sload               // [length, hash]
-    dup1                        // [length, length, hash]
-    swap2                       // [hash, length, length]
-    0x01                        // [0x01, hash, length, length]
-    swap1                       // [hash, 0x01, length, length]
-    sub                         // [hash - 0x01, length, length]
+    [ARRAY]                        // [ARRAY_PTR, length_sub_one]
+    0x00                           // [0x00, ARRAY_PTR, length_sub_one]
 
-    add                         // [LastStorageSlot, length]
+    [ARRAY]                        // [ARRAY_PTR, 0x00, ARRAY_PTR, length_sub_one]
+    0x00                           // [0x00, ARRAY_PTR, 0x00, ARRAY_PTR, length_sub_one]
+    mstore                         // [0x00, ARRAY_PTR, length_sub_one]
 
-    0x00                        // [0, LastStorageSlot, length]
-    swap1                       // [LastStorageSlot, 0, length]
-    sstore                      // [length]
+    0x20                           // [size, 0x00, ARRAY_PTR, length_sub_one]
+    0x00                           // [memOffset, size, 0x00, ARRAY_PTR, length_sub_one]
+    sha3                           // [hash, 0x00, ARRAY_PTR, length_sub_one]
 
-    // update array length
-    0x01 swap1 sub              // [length - 1]
-    [ARRAY]                     // [ARRAY_PTR, newLength]
-    sstore                      // []
+    dup4                           // [length_sub_one, hash, 0x00, ARRAY_PTR, length_sub_one]
+    add                            // [last_store_slot, 0x00, ARRAY_PTR, length_sub_one]
+
+    sstore                         // [ARRAY_PTR, length_sub_one]
+    sstore                         // []
     stop
 }
 
